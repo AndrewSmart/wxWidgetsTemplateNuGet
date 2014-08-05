@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>wxWidgetsTemplate</id>
+    <version>2.3</version>
+    <title>wxWidgets Template</title>
+    <authors>Andrew Smart</authors>
+    <owners>Andrew Smart</owners>
+    <licenseUrl>http://www.wxwidgets.org/about/newlicen.htm</licenseUrl>
+    <projectUrl>http://www.wxwidgets.org/</projectUrl>
+    <iconUrl>http://www.wxwidgets.org/logo9.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>wxWidgets template</description>
+    <releaseNotes>Fixed wxMSVC_VERSION linkage issue observed by Vadim Zeitlin. Made it possible to build wxWidgets in VS build process, to build project's wxWidgets dependency before the project code is handled (see new menu item in Common Properties of Project Properties). Fixed bug in BUILD=$(Configuration) handling.</releaseNotes>
+    <copyright>Copyright 2013</copyright>
+    <language />
+    <tags>native wxWidgets c++</tags>
+  </metadata>
+</package>
