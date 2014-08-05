@@ -40,6 +40,7 @@
 			<BuildStr Condition="'$(Configuration)'=='Debug'">$(BuildStr) BUILD=debug</BuildStr>
 			<BuildStr Condition="'$(Configuration)'=='Release'">$(BuildStr) BUILD=release</BuildStr>
 			<BuildStr Condition="'$(wxMSVC_VERSION)'!=''">$(BuildStr) COMPILER_PREFIX=vc$(wxMSVC_VERSION)</BuildStr>
+			<BuildStr Condition="'$(wxWidgetsBuildOptions)'!=''">$(BuildStr) $(wxWidgetsBuildOptions)</BuildStr>
 		</PropertyGroup>
 		<Message Condition="'$(PrintMSBuildVars)'=='true'" Text="VSINSTALLDIR: $(VSINSTALLDIR)"/>
 		<Message Condition="'$(PrintMSBuildVars)'=='true'" Text="PlatformToolset: $(PlatformToolset)"/>
