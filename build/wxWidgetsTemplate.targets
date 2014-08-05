@@ -61,7 +61,7 @@
 		<Message Condition="@(ResourceCompile->'%(AdditionalIncludeDirectories)')!=''" Text="ResourceCompile.AdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
 	</Target>
 	<!--Copies dependencies (e.g. wxWidgets .dll files) to $(OutDir)-->
-  <Target AfterTargets="AfterBuild" Name="WorkingDirectoryDependencyCopy" Label="WorkingDirectoryDependencyCopy" Inputs="@(WorkingDirectoryDependency)" Outputs="$(OutDir)@(WorkingDirectoryDependency-&gt;'%(RelativeDir)%(Filename).%(Extension)'">
+  <Target AfterTargets="AfterBuild" Name="WorkingDirectoryDependencyCopy" Label="WorkingDirectoryDependencyCopy" Inputs="@(WorkingDirectoryDependency)" Outputs="@(WorkingDirectoryDependency-&gt;'$(OutDir)%(Filename)%(Extension)'">
     <Copy SourceFiles="@(WorkingDirectoryDependency)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" UseHardlinksIfPossible="true"/>
   </Target>
 </Project>
