@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<Target BeforeTargets="ClCompile" Name="SetCreatePrecompiledHeaderFile" Label="SetCreatePrecompiledHeaderFile">
-		<PropertyGroup>
-			<AlreadySetCreatePrecompiledHeaderFile Condition="%(ClCompile.PrecompiledHeader)=='Create'">true</AlreadySetCreatePrecompiledHeaderFile>
-		</PropertyGroup>
-		<PropertyGroup>
-			<PreprocessorDefinitions>%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-			<!--Will be true if the user defined NOPCH in active configuration-->
-			<UserDefinedNOPCH>$(PreprocessorDefinitions.Contains("NOPCH"))</UserDefinedNOPCH>
-		</PropertyGroup>
-		<!--Only insert CreatePrecompiledHeaderFileProcess.cpp if user didn't define NOPCH and user didn't already set a .cpp file to create PCH-->
-		<ItemGroup Condition="'$(AlreadySetCreatePrecompiledHeaderFile)'!='true' And '$(UserDefinedNOPCH)'!='true'">
-			<ClCompile Include="$(MSBuildThisFileDirectory)\CreatePrecompiledHeaderFileProcess.cpp" Condition="'$(AlreadySetCreatePrecompiledHeaderFile)'!='true' And '$(UserDefinedNOPCH)'!='true'">
-				<PrecompiledHeader>Create</PrecompiledHeader>
-			</ClCompile>
-		</ItemGroup>
-		<!--If user defined NOPCH, change all ClCompile files to not use PCH-->
-		<ItemGroup Condition="'$(UserDefinedNOPCH)'=='true'">
-			<Temp Include="@(ClCompile)"/>
-			<ClCompile Remove="@(ClCompile)"/>
-			<ClCompile Include="@(Temp)">
-				<PrecompiledHeader>NotUsing</PrecompiledHeader>
-			</ClCompile>
-		</ItemGroup>
-	</Target>
-	<!--Target compiles wxWidgets w/ VisualStudio's toolset. Probably won't work if VS is targeting differentnly versioned toolset (e.g. VS2012 using non-updated VS2010 project).-->
-	<Target BeforeTargets="ClCompile" Name="BuildwxWidgets" Label="BuildwxWidgets" Condition="'$(BuildwxWidgets)'=='true'">
-		<PropertyGroup>
-			<VCBinPath>$(VSINSTALLDIR)\VC\bin\</VCBinPath>
-			<!--<VCBinPath>$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\VC\bin\</VCBinPath>-->
-			<VCBinPath Condition="'$(Platform)'=='x64'">$(VCBinPath)amd64\</VCBinPath>
-			<VCVarsSuffix Condition="'$(Platform)'!='x64'">32</VCVarsSuffix>
-			<VCVarsSuffix Condition="'$(Platform)'=='x64'">64</VCVarsSuffix>
-			<!--Two different versions of nmake exist for 32bit & 64bit archs. The correct vcvars32.bat or vcvars64.bat should be called before nmake is called.-->
-			<BuildStr>call "$(VCBinPath)vcvars$(VCVarsSuffix).bat" &amp;&amp; "$(VCBinPath)nmake" -f makefile.vc USE_GDIPLUS=1</BuildStr>
-			<BuildStr Condition="'$(Platform)'=='x64'">$(BuildStr) TARGET_CPU=AMD64</BuildStr>
-			<BuildStr Condition="'$(LIBTYPE_SUFFIX)'=='lib'">$(BuildStr) SHARED=0</BuildStr>
-			<BuildStr Condition="'$(LIBTYPE_SUFFIX)'=='dll'">$(BuildStr) SHARED=1</BuildStr>
-			<BuildStr Condition="'$(Configuration)'=='Debug'">$(BuildStr) BUILD=debug</BuildStr>
-			<BuildStr Condition="'$(Configuration)'=='Release'">$(BuildStr) BUILD=release</BuildStr>
-			<BuildStr Condition="'$(wxMSVC_VERSION)'!=''">$(BuildStr) COMPILER_PREFIX=vc$(wxMSVC_VERSION)</BuildStr>
-			<BuildStr Condition="'$(wxWidgetsBuildOptions)'!=''">$(BuildStr) $(wxWidgetsBuildOptions)</BuildStr>
-		</PropertyGroup>
-		<Message Condition="'$(PrintMSBuildVars)'=='true'" Text="VSINSTALLDIR: $(VSINSTALLDIR)"/>
-		<Message Condition="'$(PrintMSBuildVars)'=='true'" Text="PlatformToolset: $(PlatformToolset)"/>
-		<Message Condition="'$(PrintMSBuildVars)'=='true'" Text="VisualStudioVersion: $(VisualStudioVersion)"/>
-		<Message Text="BuildStr: $(BuildStr)"/>
-		<Exec WorkingDirectory="$(wxWidgets)\build\msw" Command="$(BuildStr)"/>
-	</Target>
-	<!--Print messages describing this template's modifications-->
-	<Target BeforeTargets="ClCompile" Name="PrintClCompileVars" Label="PrintClCompileVars" Condition="'$(PrintMSBuildVars)'=='true'">
-		<Message Condition="@(ClCompile->'%(AdditionalIncludeDirectories)')!=''" Text="ClCompile.ClCompileAdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
-		<Message Condition="@(ClCompile->'%(PreprocessorDefinitions)')!=''" Text="ClCompile.PreprocessorDefinitions: %(PreprocessorDefinitions)"/>
-	</Target>
-	<Target BeforeTargets="Link" Name="PrintLinkVars" Label="PrintLinkVars" Condition="'$(PrintMSBuildVars)'=='true'">
-		<Message Condition="@(Link->'%(AdditionalLibraryDirectories)')!=''" Text="Link.AdditionalLibraryDirectories: %(AdditionalLibraryDirectories)"/>
-		<Message Condition="@(Link->'%(AdditionalDependencies)')!=''" Text="Link.AdditionalDependencies: %(AdditionalDependencies)"/>
-	</Target>
-	<Target BeforeTargets="ResourceCompile" Name="PrintResourceCompileVars" Label="PrintResourceCompileVars" Condition="'$(PrintMSBuildVars)'=='true'">
-		<Message Condition="@(ResourceCompile->'%(AdditionalIncludeDirectories)')!=''" Text="ResourceCompile.AdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
-	</Target>
-	<!--Copies dependencies (e.g. wxWidgets .dll files) to $(OutDir)-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Target BeforeTargets="ClCompile" Name="SetCreatePrecompiledHeaderFile" Label="SetCreatePrecompiledHeaderFile">
+    <PropertyGroup>
+      <AlreadySetCreatePrecompiledHeaderFile Condition="%(ClCompile.PrecompiledHeader)=='Create'">true</AlreadySetCreatePrecompiledHeaderFile>
+    </PropertyGroup>
+    <PropertyGroup>
+      <PreprocessorDefinitions>%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <!--Will be true if the user defined NOPCH in active configuration-->
+      <UserDefinedNOPCH>$(PreprocessorDefinitions.Contains("NOPCH"))</UserDefinedNOPCH>
+    </PropertyGroup>
+    <!--Only insert CreatePrecompiledHeaderFileProcess.cpp if user didn't define NOPCH and user didn't already set a .cpp file to create PCH-->
+    <ItemGroup Condition="'$(AlreadySetCreatePrecompiledHeaderFile)'!='true' And '$(UserDefinedNOPCH)'!='true'">
+      <ClCompile Include="$(MSBuildThisFileDirectory)\CreatePrecompiledHeaderFileProcess.cpp" Condition="'$(AlreadySetCreatePrecompiledHeaderFile)'!='true' And '$(UserDefinedNOPCH)'!='true'">
+        <PrecompiledHeader>Create</PrecompiledHeader>
+      </ClCompile>
+    </ItemGroup>
+    <!--If user defined NOPCH, change all ClCompile files to not use PCH-->
+    <ItemGroup Condition="'$(UserDefinedNOPCH)'=='true'">
+      <Temp Include="@(ClCompile)"/>
+      <ClCompile Remove="@(ClCompile)"/>
+      <ClCompile Include="@(Temp)">
+        <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      </ClCompile>
+    </ItemGroup>
+  </Target>
+  <!--Target compiles wxWidgets w/ VisualStudio's toolset. Probably won't work if VS is targeting differentnly versioned toolset (e.g. VS2012 using non-updated VS2010 project).-->
+  <Target BeforeTargets="ClCompile" Name="BuildwxWidgets" Label="BuildwxWidgets" Condition="'$(BuildwxWidgets)'=='true'">
+    <PropertyGroup>
+      <VCBinPath>$(VSINSTALLDIR)\VC\bin\</VCBinPath>
+      <!--<VCBinPath>$(MSBuildProgramFiles32)\Microsoft Visual Studio $(VisualStudioVersion)\VC\bin\</VCBinPath>-->
+      <VCBinPath Condition="'$(Platform)'=='x64'">$(VCBinPath)amd64\</VCBinPath>
+      <VCVarsSuffix Condition="'$(Platform)'!='x64'">32</VCVarsSuffix>
+      <VCVarsSuffix Condition="'$(Platform)'=='x64'">64</VCVarsSuffix>
+      <!--Two different versions of nmake exist for 32bit & 64bit archs. The correct vcvars32.bat or vcvars64.bat should be called before nmake is called.-->
+      <BuildStr>call "$(VCBinPath)vcvars$(VCVarsSuffix).bat" &amp;&amp; "$(VCBinPath)nmake" -f makefile.vc USE_GDIPLUS=1</BuildStr>
+      <BuildStr Condition="'$(Platform)'=='x64'">$(BuildStr) TARGET_CPU=AMD64</BuildStr>
+      <BuildStr Condition="'$(LIBTYPE_SUFFIX)'=='lib'">$(BuildStr) SHARED=0</BuildStr>
+      <BuildStr Condition="'$(LIBTYPE_SUFFIX)'=='dll'">$(BuildStr) SHARED=1</BuildStr>
+      <BuildStr Condition="'$(Configuration)'=='Debug'">$(BuildStr) BUILD=debug</BuildStr>
+      <BuildStr Condition="'$(Configuration)'=='Release'">$(BuildStr) BUILD=release</BuildStr>
+      <BuildStr Condition="'$(wxMSVC_VERSION)'!=''">$(BuildStr) COMPILER_PREFIX=vc$(wxMSVC_VERSION)</BuildStr>
+      <BuildStr Condition="'$(wxWidgetsBuildOptions)'!=''">$(BuildStr) $(wxWidgetsBuildOptions)</BuildStr>
+    </PropertyGroup>
+    <Message Condition="'$(PrintMSBuildVars)'=='true'" Text="VSINSTALLDIR: $(VSINSTALLDIR)"/>
+    <Message Condition="'$(PrintMSBuildVars)'=='true'" Text="PlatformToolset: $(PlatformToolset)"/>
+    <Message Condition="'$(PrintMSBuildVars)'=='true'" Text="VisualStudioVersion: $(VisualStudioVersion)"/>
+    <Message Text="BuildStr: $(BuildStr)"/>
+    <Exec WorkingDirectory="$(wxWidgets)\build\msw" Command="$(BuildStr)"/>
+  </Target>
+  <!--Print messages describing this template's modifications-->
+  <Target BeforeTargets="ClCompile" Name="PrintClCompileVars" Label="PrintClCompileVars" Condition="'$(PrintMSBuildVars)'=='true'">
+    <Message Condition="@(ClCompile-&gt;'%(AdditionalIncludeDirectories)')!=''" Text="ClCompile.ClCompileAdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
+    <Message Condition="@(ClCompile-&gt;'%(PreprocessorDefinitions)')!=''" Text="ClCompile.PreprocessorDefinitions: %(PreprocessorDefinitions)"/>
+  </Target>
+  <Target BeforeTargets="Link" Name="PrintLinkVars" Label="PrintLinkVars" Condition="'$(PrintMSBuildVars)'=='true'">
+    <Message Condition="@(Link-&gt;'%(AdditionalLibraryDirectories)')!=''" Text="Link.AdditionalLibraryDirectories: %(AdditionalLibraryDirectories)"/>
+    <Message Condition="@(Link-&gt;'%(AdditionalDependencies)')!=''" Text="Link.AdditionalDependencies: %(AdditionalDependencies)"/>
+  </Target>
+  <Target BeforeTargets="ResourceCompile" Name="PrintResourceCompileVars" Label="PrintResourceCompileVars" Condition="'$(PrintMSBuildVars)'=='true'">
+    <Message Condition="@(ResourceCompile-&gt;'%(AdditionalIncludeDirectories)')!=''" Text="ResourceCompile.AdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
+  </Target>
+  <!--Copies dependencies (e.g. wxWidgets .dll files) to $(OutDir)-->
   <Target AfterTargets="AfterBuild" Name="WorkingDirectoryDependencyCopy" Label="WorkingDirectoryDependencyCopy" Inputs="@(WorkingDirectoryDependency)" Outputs="@(WorkingDirectoryDependency-&gt;'$(OutDir)%(Filename)%(Extension)'">
     <Copy SourceFiles="@(WorkingDirectoryDependency)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" UseHardlinksIfPossible="true"/>
   </Target>

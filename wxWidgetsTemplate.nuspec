@@ -15,7 +15,7 @@
 		Followed Ray Satiro's suggestions for WorkingDirectoryDependencyCopy.
 		Fixed issue when using VisualStudio's stdafx PCH.</releaseNotes>
     <copyright>Copyright 2013</copyright>
-    <language />
+    <language/>
     <tags>native wxWidgets c++</tags>
   </metadata>
 </package>
