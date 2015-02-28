@@ -19,7 +19,7 @@
       <EnumValue Name="mswuniv" DisplayName="mswuniv"/>
       <EnumValue Name="gtk2" DisplayName="gtk2"/>
     </EnumProperty>
-    <EnumProperty Category="wxWidgetsOptions" Name="wxMSVC_VERSION" DisplayName="wxMSVC_VERSION" Description="[Optional] Only define if you built wxWidgets with wxMSVC_VERSION defined, see include/msvc/wx/setup.h; setting this option will define wxMSVC_VERSION and use approprate library directory.">
+    <EnumProperty Category="wxWidgetsOptions" Name="wxMSVC_VERSION" DisplayName="wxMSVC_VERSION" Description="$(wxMSVC_VERSION_autodetect) is an attempt to deduce this setting automatically. Change this to what it should be if there are problems finding the approprate library directory (e.g. ./lib/vc100_x64_dll/).">
       <EnumValue Name="60" DisplayName="60"/>
       <EnumValue Name="70" DisplayName="70"/>
       <EnumValue Name="71" DisplayName="71"/>

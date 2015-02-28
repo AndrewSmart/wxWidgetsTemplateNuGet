@@ -20,8 +20,20 @@
     <WXDEBUGFLAG Condition="'$(UseDebugLibraries)'=='true'">d</WXDEBUGFLAG>
     <WXDEBUGFLAG Condition="'$(UseDebugLibraries)'!='true'"/>
     <WXUNICODEFLAG>u</WXUNICODEFLAG>
+    <!--Next series of elements attempt to deduce what wxMSVC_VERSION should be based off of folders in $(wxWidgets)/lib-->
     <!--Issue here in automatic deduction of wxMSVC_VERSION is $(PlatformToolsetVersion) isn't defined until after NuGet insertion of this .props file.
     <wxMSVC_VERSION Condition="Exists('$(wxWidgets)\lib\$(COMPILER_PREFIX)$(PlatformToolsetVersion)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)')">$(PlatformToolsetVersion)</wxMSVC_VERSION>-->
+    <!--Look only at folders with appropriate COMPLIER_PREFIX, ARCH_SUFFIX, and LIBTYPE_SUFFIX-->
+    <wx_folder_query>$([System.IO.Directory]::GetDirectories('$(wxWidgets)\lib\','$(COMPILER_PREFIX)*$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)'))</wx_folder_query>
+    <!--Remove parent folders, we just want e.g. vc100_x64_dll-->
+    <wx_folder_query Condition="'$(wx_folder_query)'!=''">$([System.Text.RegularExpressions.Regex]::Replace('$(wx_folder_query)','.*\\',''))</wx_folder_query>
+    <!--Remove everything after underscores, result e.g. vc100-->
+    <wx_folder_query Condition="'$(wx_folder_query)'!=''">$([System.Text.RegularExpressions.Regex]::Replace('$(wx_folder_query)','_.*',''))</wx_folder_query>
+    <!--Remove compiler prefix, result e.g. 100-->
+    <wx_folder_query Condition="'$(wx_folder_query)'!=''">$([System.Text.RegularExpressions.Regex]::Replace('$(wx_folder_query)','$(COMPILER_PREFIX)',''))</wx_folder_query>
+    <!--If wx_folder_query is a number, use it-->
+    <wxMSVC_VERSION_autodetect Condition="'$(wx_folder_query)'!=''">$([System.Text.RegularExpressions.Regex]::Match(`$(wx_folder_query)`, `\d*`))</wxMSVC_VERSION_autodetect>
+    <wxMSVC_VERSION Condition="'(wxMSVC_VERSION_autodetect)'!=''">$(wxMSVC_VERSION_autodetect)</wxMSVC_VERSION>
   </PropertyGroup>
   <ItemGroup>
     <!--wxWidget application's dynamically-linked dependencies need to be copied to the output directory; name them here-->
@@ -44,7 +56,7 @@
     </ClCompile>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <PrecompiledHeaderFile Condition="$(PrecompiledHeaderFile)==''">wx/wxprec.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(PrecompiledHeaderFile)'==''">wx/wxprec.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(ProjectDir)$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
     </ClCompile>
     <Link>
