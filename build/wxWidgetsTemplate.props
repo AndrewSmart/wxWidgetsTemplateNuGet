@@ -21,7 +21,7 @@
     <WXDEBUGFLAG Condition="'$(Configuration)'!='Debug'"/>
     <WXUNICODEFLAG>u</WXUNICODEFLAG>
     <!--Issue here in automatic deduction of wxMSVC_VERSION is $(PlatformToolsetVersion) isn't defined until after NuGet insertion of this .props file.
-		<wxMSVC_VERSION Condition="Exists('$(wxWidgets)\lib\$(COMPILER_PREFIX)$(PlatformToolsetVersion)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)')">$(PlatformToolsetVersion)</wxMSVC_VERSION>-->
+    <wxMSVC_VERSION Condition="Exists('$(wxWidgets)\lib\$(COMPILER_PREFIX)$(PlatformToolsetVersion)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)')">$(PlatformToolsetVersion)</wxMSVC_VERSION>-->
   </PropertyGroup>
   <ItemGroup>
     <!--wxWidget application's dynamically-linked dependencies need to be copied to the output directory; name them here-->
