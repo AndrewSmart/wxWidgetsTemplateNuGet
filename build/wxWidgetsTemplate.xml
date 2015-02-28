@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <Rule Name="wxWidgets" PageTemplate="generic" DisplayName="wxWidgets" Order="0">
+  <Rule Name="wxWidgets" PageTemplate="tool" DisplayName="Referenced Packages" Order="0">
     <!--xmlns="http://schemas.microsoft.com/build/2009/properties"-->
     <Rule.DataSource>
       <DataSource Persistence="UserFile" ItemType="" Label="" HasConfigurationCondition="false"/>
     </Rule.DataSource>
     <Rule.Categories>
-      <Category Name="wxWidgetsOptions" DisplayName="Target"/>
+      <Category Name="wxWidgetsOptions" DisplayName="wxWidgets"/>
     </Rule.Categories>
     <!--Variables in the property pages are lazily evaluated I think.-->
     <StringProperty Category="wxWidgetsOptions" Subtype="folder" Name="wxWidgets" DisplayName="wxWidgets path" Description="wxWidgets root location."/>
