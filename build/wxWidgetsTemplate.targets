@@ -37,8 +37,8 @@
       <BuildStr Condition="'$(Platform)'=='x64'">$(BuildStr) TARGET_CPU=AMD64</BuildStr>
       <BuildStr Condition="'$(LIBTYPE_SUFFIX)'=='lib'">$(BuildStr) SHARED=0</BuildStr>
       <BuildStr Condition="'$(LIBTYPE_SUFFIX)'=='dll'">$(BuildStr) SHARED=1</BuildStr>
-      <BuildStr Condition="'$(Configuration)'=='Debug'">$(BuildStr) BUILD=debug</BuildStr>
-      <BuildStr Condition="'$(Configuration)'=='Release'">$(BuildStr) BUILD=release</BuildStr>
+      <BuildStr Condition="'$(WXDEBUGFLAG)'=='d'">$(BuildStr) BUILD=debug</BuildStr>
+      <BuildStr Condition="'$(WXDEBUGFLAG)'!='d'">$(BuildStr) BUILD=release</BuildStr>
       <BuildStr Condition="'$(wxMSVC_VERSION)'!=''">$(BuildStr) COMPILER_PREFIX=vc$(wxMSVC_VERSION)</BuildStr>
       <BuildStr Condition="'$(wxWidgetsBuildOptions)'!=''">$(BuildStr) $(wxWidgetsBuildOptions)</BuildStr>
     </PropertyGroup>

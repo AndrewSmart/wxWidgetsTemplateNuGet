@@ -8,7 +8,7 @@
     <!--wxWidgetsOptions Defaults; UI settings override-->
     <!--Each appear to be re-evaluated during build: in VS2010 are re-evaluated on condition-param change, in VS2012 are re-evaluated at a time before they are used in the build.-->
     <wxWidgets Condition="'$(WXWIN)'!='' And $(wxWidgets)==''">$(WXWIN)</wxWidgets>
-    <LIBTYPE_SUFFIX Condition="'$(LIBTYPE_SUFFIX)'==''">lib</LIBTYPE_SUFFIX>
+    <LIBTYPE_SUFFIX Condition="'$(LIBTYPE_SUFFIX)'==''">dll</LIBTYPE_SUFFIX>
     <wxMSVC_VERSION Condition="'$(wxMSVC_VERSION)'==''"/>
     <BuildwxWidgets Condition="'$(BuildwxWidgets)'==''">false</BuildwxWidgets>
     <wxTOOLKIT_PREFIX Condition="'$(wxTOOLKIT_PREFIX)'==''">msw</wxTOOLKIT_PREFIX>
@@ -17,8 +17,8 @@
     <ARCH_SUFFIX Condition="'$(Platform)'=='x64'">_x64</ARCH_SUFFIX>
     <ARCH_SUFFIX Condition="'$(Platform)'=='Itanium'">_ia64</ARCH_SUFFIX>
     <ARCH_SUFFIX Condition="'$(Platform)'=='Win32'"/>
-    <WXDEBUGFLAG Condition="'$(Configuration)'=='Debug'">d</WXDEBUGFLAG>
-    <WXDEBUGFLAG Condition="'$(Configuration)'!='Debug'"/>
+    <WXDEBUGFLAG Condition="'$(UseDebugLibraries)'=='true'">d</WXDEBUGFLAG>
+    <WXDEBUGFLAG Condition="'$(UseDebugLibraries)'!='true'"/>
     <WXUNICODEFLAG>u</WXUNICODEFLAG>
     <!--Issue here in automatic deduction of wxMSVC_VERSION is $(PlatformToolsetVersion) isn't defined until after NuGet insertion of this .props file.
     <wxMSVC_VERSION Condition="Exists('$(wxWidgets)\lib\$(COMPILER_PREFIX)$(PlatformToolsetVersion)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)')">$(PlatformToolsetVersion)</wxMSVC_VERSION>-->
@@ -37,8 +37,7 @@
       <PreprocessorDefinitions>_CRTDBG_MAP_ALLOC;_CRT_SECURE_NO_WARNINGS;_WINDOWS;__WXMSW__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(LIBTYPE_SUFFIX)'=='dll'">WXUSINGDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--Might be better to add NOPCH to PreprocessorDefinitions in the debug configuration?-->
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Debug'">_DEBUG;__WXDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(Configuration)'=='Release'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(WXDEBUGFLAG)'=='d'">__WXDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Platform)'=='Win32'">WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(wxTOOLKIT_PREFIX)'=='mswuniv'">__WXUNIVERSAL__;wxTOOLKIT_PREFIX=mswuniv;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(wxMSVC_VERSION)'!=''">wxMSVC_VERSION=$(wxMSVC_VERSION);%(PreprocessorDefinitions)</PreprocessorDefinitions>
