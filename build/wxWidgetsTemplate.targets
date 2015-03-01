@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="wxWidgetsNuGetTailInject.props" Condition="Exists('wxWidgetsNuGetTailInject.props')"/>
   <Target BeforeTargets="ClCompile" Name="SetCreatePrecompiledHeaderFile" Label="SetCreatePrecompiledHeaderFile">
     <PropertyGroup>
       <AlreadySetCreatePrecompiledHeaderFile Condition="%(ClCompile.PrecompiledHeader)=='Create'">true</AlreadySetCreatePrecompiledHeaderFile>
@@ -60,8 +61,8 @@
   <Target BeforeTargets="ResourceCompile" Name="PrintResourceCompileVars" Label="PrintResourceCompileVars" Condition="'$(PrintMSBuildVars)'=='true'">
     <Message Condition="@(ResourceCompile-&gt;'%(AdditionalIncludeDirectories)')!=''" Text="ResourceCompile.AdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
   </Target>
-  <!--Copies dependencies (e.g. wxWidgets .dll files) to $(OutDir)-->
   <Target AfterTargets="AfterBuild" Name="WorkingDirectoryDependencyCopy" Label="WorkingDirectoryDependencyCopy" Inputs="@(WorkingDirectoryDependency)" Outputs="@(WorkingDirectoryDependency-&gt;'$(OutDir)%(Filename)%(Extension)'">
+    <!--Copies dependencies (e.g. wxWidgets .dll files) to $(OutDir)-->
     <Copy SourceFiles="@(WorkingDirectoryDependency)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" UseHardlinksIfPossible="true"/>
   </Target>
 </Project>

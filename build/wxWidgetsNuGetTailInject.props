@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <!--wxWidgetsOptions Defaults; UI settings override-->
+    <!--Each appear to be re-evaluated during build: in VS2010 are re-evaluated on condition-param change, in VS2012 are re-evaluated at a time before they are used in the build.-->
+    <!--I've learned that sometimes $(UseDebugLibraries) can be unset due to MSVC project upgrade, or hand modification. We need it, so define it if it is unset.-->
+    <UseDebugLibraries Condition="'$(UseDebugLibraries)'=='' And '$(RuntimeLibrary)'=='MultiThreadedDebug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(UseDebugLibraries)'=='' And '$(RuntimeLibrary)'=='MultiThreadedDebugDll'">true</UseDebugLibraries>
+    <WXDEBUGFLAG Condition="'$(UseDebugLibraries)'=='true'">d</WXDEBUGFLAG>
+    <WXDEBUGFLAG Condition="'$(UseDebugLibraries)'!='true'"/>
+    <!--I'm not sure if I should, at the moment couple the MSVC Project's Unicode setting completely to the wxWidget's library. Perhaps one or the other being ANSI is a desired case?
+    <WXUNICODEFLAG Condition="'$(CharacterSet)'=='Unicode'">u</WXUNICODEFLAG>
+    <WXUNICODEFLAG Condition="'$(CharacterSet)'!='Unicode'"/>-->
+  </PropertyGroup>
+  <!--wxWidget application's dynamically-linked dependencies ideally should be available within the output directory, so that the exe can be directly ran from that folder; name them here-->
+  <!--TODO:Make WorkingDirectoryDependency exclude the un-linked wx libraries? Not possible using current msvc\wx\setup.h-->
+  <ItemGroup>
+    <WorkingDirectoryDependency Include="$(wxWidgets)\lib\$(COMPILER_PREFIX)$(wxMSVC_VERSION)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)\*$(WXUNICODEFLAG)$(WXDEBUGFLAG)_*pdb" Condition="'$(LIBTYPE_SUFFIX)'=='dll'"/>
+    <WorkingDirectoryDependency Include="$(wxWidgets)\lib\$(COMPILER_PREFIX)$(wxMSVC_VERSION)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)\*$(WXUNICODEFLAG)$(WXDEBUGFLAG)_*$(LIBTYPE_SUFFIX)" Condition="'$(LIBTYPE_SUFFIX)'=='dll'"/>
+    <WorkingDirectoryDependency Include="$(wxWidgets)\lib\$(COMPILER_PREFIX)$(wxMSVC_VERSION)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)\*$(WXUNICODEFLAG)$(WXDEBUGFLAG)_*$(LIBTYPE_SUFFIX).manifest" Condition="'$(LIBTYPE_SUFFIX)'=='dll'"/>
+  </ItemGroup>
+  <!--<ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions Condition="'$(WXDEBUGFLAG)'=='d'">__WXDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>-->
+</Project>
