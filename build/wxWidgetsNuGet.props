@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <ItemGroup>
     <!--Includes wxWidgets property page: in VS2010 appears in Configuration category, in VS2012 appears in Common category.-->
-    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\wxWidgetsTemplate.xml"/>
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\wxWidgetsNuGet.xml"/>
   </ItemGroup>
   <PropertyGroup>
     <!--wxWidgetsOptions Defaults; UI settings override-->
