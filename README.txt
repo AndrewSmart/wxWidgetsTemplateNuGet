@@ -30,6 +30,10 @@ This package modifies the project in many ways, including:
   appropriate:
   * _WINDOWS, __WXMSW__, WXUSINGDLL, __WXDEBUG__, WIN32, __WXUNIVERSAL__,
     wxTOOLKIT_PREFIX=mswuniv
+  * _CRT_SECURE_NO_WARNINGS is defined. Given the cross-platform nature of
+    a project using wxWidgets, it usually wouldn't be useful to convert many
+    standard C functions to MSVC specific ones (e.g. strcpy to strcpy_s), as
+    then the code wouldn't be so cross-platform.
 * Adds the wxWidgets include folder to the compiler search paths.
 * Adds the wxWidgets library folder to the compiler search paths.
 * Links against all appropriate wxWidgets libraries.
@@ -67,6 +71,11 @@ This package modifies the project in many ways, including:
     use a PCH.
 * Sets up project to use MSVC memory leak detection facilities:
   https://wiki.wxwidgets.org/Avoiding_Memory_Leaks#Automatic_leak_detection_with_Microsoft_VisualC.2B.2B
-  * Defines _CRTDBG_MAP_ALLOC, _CRT_SECURE_NO_WARNINGS preprocessor directives
+  * Defines _CRTDBG_MAP_ALLOC preprocessor directive.
   * Employs project wide usage of memory leak detection via directives in the
     packaged PCH
+  * When in debug mode of a debug configuaration, and application is exited,
+    any memory leaks will be printed to the output pane of Visual Studio with
+    a message like so:
+      Detected memory leaks!
+      Dumping objects ->
