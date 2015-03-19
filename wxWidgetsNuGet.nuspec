@@ -2,23 +2,26 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>wxWidgetsTemplate</id>
-    <version>2.4.3</version>
+    <version>2.5.0</version>
     <title>MS Visual Studio wxWidgets Helper</title>
     <authors>Andrew Smart</authors>
     <owners>Andrew Smart</owners>
     <licenseUrl>http://www.wxwidgets.org/about/newlicen.htm</licenseUrl>
-    <projectUrl>https://github.com/AndrewSmart/wxWidgetsTemplateNuGet</projectUrl>
+    <projectUrl>https://wiki.wxwidgets.org/Microsoft_Visual_C++_NuGet</projectUrl>
     <iconUrl>http://www.wxwidgets.org/logo9.jpg</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>MS Visual Studio wxWidgets Helper; adds property page to allow customization of wxWidgets build linked to, and even building the target build if it doesn't exist.</description>
-    <releaseNotes>Removed duplicate _UNICODE preprocessor definition.
-		Followed Ray Satiro's suggestions for WorkingDirectoryDependencyCopy.
-		Fixed issue when using VisualStudio's stdafx PCH.
-    Added readme.
-    Indented xml files correctly.
-    Updated PCH.</releaseNotes>
+    <description>MS Visual Studio wxWidgets Helper; adds property page to allow customization of wxWidgets build linked to, and even building the target build from source if it doesn't exist.</description>
+    <releaseNotes>
+	Changed default linkage to dynamic-link.
+	Removed dependence on Release/Debug named configurations.
+	Renamed a bunch of files, moved some properties into the .targets file.
+	Moved property pages to 'Referenced Packages' as other CoApp package property pages are in that location.
+	Added clean target, to clean wxWidgets dlls that were copied to $(OutDir) directory.
+	Removed _CRT_SECURE_NO_WARNINGS definition.
+	Added ChangeLog.
+    </releaseNotes>
     <copyright>Copyright 2013</copyright>
     <language/>
-    <tags>native wxWidgets c++</tags>
+    <tags>native wxWidgets c++ nativepackage</tags>
   </metadata>
 </package>

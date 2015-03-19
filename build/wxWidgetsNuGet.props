@@ -41,7 +41,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(wxWidgets)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalIncludeDirectories>$(wxWidgets)\include\msvc\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRTDBG_MAP_ALLOC;_CRT_SECURE_NO_WARNINGS;_WINDOWS;__WXMSW__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRTDBG_MAP_ALLOC;_WINDOWS;__WXMSW__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(LIBTYPE_SUFFIX)'=='dll'">WXUSINGDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--Might be better to add NOPCH to PreprocessorDefinitions in the debug configuration?-->
       <PreprocessorDefinitions Condition="'$(WXDEBUGFLAG)'=='d'">__WXDEBUG__;%(PreprocessorDefinitions)</PreprocessorDefinitions>

@@ -82,4 +82,8 @@
     <!--Copies dependencies (e.g. wxWidgets .dll files) to $(OutDir)-->
     <Copy SourceFiles="@(WorkingDirectoryDependency)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" UseHardlinksIfPossible="true"/>
   </Target>
+  <Target AfterTargets="AfterClean" Name="WorkingDirectoryDependencyClean" Label="WorkingDirectoryDependencyClean">
+    <!--Cleans out dependencies copied by WorkingDirectoryDependencyCopy Target-->
+    <Delete Files="@(WorkingDirectoryDependency-&gt;'$(OutDir)%(Filename)%(Extension)')"/>
+  </Target>
 </Project>

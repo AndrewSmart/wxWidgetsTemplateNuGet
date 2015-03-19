@@ -31,4 +31,3 @@
 #if !defined(_INC_CRTDBG) || !defined(_CRTDBG_MAP_ALLOC)
     #error Debug CRT functions have not been included!
 #endif
-

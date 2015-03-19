@@ -2,42 +2,23 @@
 The license for this package and its contents are that of the wxWidgets project: http://www.wxwidgets.org/about/licence/
 Copyright (c) 2013-2015 Andrew Smart
 
-This NuGet package assists projects that depend on wxWidgets.
+This NuGet package assists MSVC projects that depend on wxWidgets.
 
 Guide to installing and configuring this package is here:
 https://wiki.wxwidgets.org/Microsoft_Visual_C++_NuGet
 
-Technology described here:
-http://blogs.msdn.com/b/vcblog/archive/2013/06/18/deep-dive-into-nuget-native-part-one.aspx
-
-	There is no need for configuring this package if the WXWIN
-environmental variable defined, and the wxWidgets DLLs exist there. See the
-guide for setup details if the build fails after installing this package.
-
-	Modern wxWidgets is built using the Unicode character set; starting
-around Visual Studio 2012 new VC++ projects use the Unicode character set by
-default. You may need to set this setting manually (in the project property
-pages, under the General category) in order to link to wxWidgets (as
-msvc/wx/setup.h expects _UNICODE to be defined on the project level in order
-to find/link to the appropriate wxWidgets libraries which were built using the
-Unicode character set compiler options). Here is some helpful information if
-you run into issues here (e.g. some libraries are ANSI, some are Unicode, and
-what to set your project to compile with):
-http://stackoverflow.com/questions/10241540/implications-of-using-non-unicode-library-with-a-unicode-built-application
+There is no need to configure this package if the WXWIN environmental
+variable defined, and the wxWidgets DLLs exist there.
 
 This package modifies the project in many ways, including:
 * Defining wxWidgets preprocessor directives on the project level, where
   appropriate:
   * _WINDOWS, __WXMSW__, WXUSINGDLL, __WXDEBUG__, WIN32, __WXUNIVERSAL__,
     wxTOOLKIT_PREFIX=mswuniv
-  * _CRT_SECURE_NO_WARNINGS is defined. Given the cross-platform nature of
-    a project using wxWidgets, it usually wouldn't be useful to convert many
-    standard C functions to MSVC specific ones (e.g. strcpy to strcpy_s), as
-    then the code wouldn't be so cross-platform.
 * Adds the wxWidgets include folder to the compiler search paths.
 * Adds the wxWidgets library folder to the compiler search paths.
 * Links against all appropriate wxWidgets libraries.
-  * Implemented via the PCH incuding wx/wxprec.h, which includes
+  * Implemented via the PCH including wx/wxprec.h, which includes
     msvc/wx/setup.h
   * See msvc/wx/setup.h for details.
 * Allows any developer on the project to link to any wxWidgets build they want.
@@ -74,8 +55,21 @@ This package modifies the project in many ways, including:
   * Defines _CRTDBG_MAP_ALLOC preprocessor directive.
   * Employs project wide usage of memory leak detection via directives in the
     packaged PCH
-  * When in debug mode of a debug configuaration, and application is exited,
+  * When in debug mode of a debug configuration, and application is exited,
     any memory leaks will be printed to the output pane of Visual Studio with
     a message like so:
       Detected memory leaks!
       Dumping objects ->
+
+Modern wxWidgets is built using the Unicode character set; starting around
+Visual Studio 2012 new VC++ projects use the Unicode character set by default.
+* You may need to manually set this Unicode setting in order for your
+  executable to link against the wxWidgets library without problems.
+* This setting is in the project property pages, under the General category.
+* Here is some helpful information if you run into issues here (e.g. some
+  libraries are ANSI, some are Unicode, and what to set your project to compile
+  with):
+  http://stackoverflow.com/questions/10241540/implications-of-using-non-unicode-library-with-a-unicode-built-application
+
+NuGet/C++ technology described here:
+http://blogs.msdn.com/b/vcblog/archive/2013/06/18/deep-dive-into-nuget-native-part-one.aspx

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProjectSchemaDefinitions xmlns="clr-namespace:Microsoft.Build.Framework.XamlTypes;assembly=Microsoft.Build.Framework" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
-  <Rule Name="wxWidgets" PageTemplate="tool" DisplayName="Referenced Packages" Order="0">
+  <Rule Name="wxWidgetsNuGetRule" PageTemplate="tool" DisplayName="Referenced Packages" Order="0">
     <!--xmlns="http://schemas.microsoft.com/build/2009/properties"-->
     <Rule.DataSource>
       <DataSource Persistence="UserFile" ItemType="" Label="" HasConfigurationCondition="false"/>
