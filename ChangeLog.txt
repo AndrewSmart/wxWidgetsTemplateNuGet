@@ -1,3 +1,7 @@
+2.5.2
+Had to rename .props and .targets files to match id.
+2.5.1
+Fixed changelog bug last version.
 2.5.0
 Added autodetection of wxWidgets library include path.
 Changed default linkage to dynamic-link.
