@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>wxWidgetsTemplate</id>
-    <version>2.5.0</version>
+    <version>2.5.1</version>
     <title>MS Visual Studio wxWidgets Helper</title>
     <authors>Andrew Smart</authors>
     <owners>Andrew Smart</owners>
@@ -12,6 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>MS Visual Studio wxWidgets Helper; adds property page to allow customization of wxWidgets build linked to, and even building the target build from source if it doesn't exist.</description>
     <releaseNotes>
+	Added autodetection of wxWidgets library include path.
 	Changed default linkage to dynamic-link.
 	Removed dependence on Release/Debug named configurations.
 	Renamed a bunch of files, moved some properties into the .targets file.

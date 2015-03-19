@@ -1,4 +1,5 @@
 2.5.0
+Added autodetection of wxWidgets library include path.
 Changed default linkage to dynamic-link.
 Removed dependence on Release/Debug named configurations.
 Renamed a bunch of files, moved some properties into the .targets file.
