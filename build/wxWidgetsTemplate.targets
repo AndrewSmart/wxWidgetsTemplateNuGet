@@ -11,6 +11,8 @@
     <!--I'm not sure if I should, at the moment couple the MSVC Project's Unicode setting completely to the wxWidget's library. Perhaps one or the other being ANSI is a desired case?
     <WXUNICODEFLAG Condition="'$(CharacterSet)'=='Unicode'">u</WXUNICODEFLAG>
     <WXUNICODEFLAG Condition="'$(CharacterSet)'!='Unicode'"/>-->
+	<novPlatformToolsetVersion Condition="$(PlatformToolsetVersion)!=''">$([System.Text.RegularExpressions.Regex]::Replace('$(PlatformToolsetVersion)','v',''))</novPlatformToolsetVersion>
+    <wxMSVC_VERSION Condition="Exists('$(wxWidgets)\lib\$(COMPILER_PREFIX)$(novPlatformToolsetVersion)$(ARCH_SUFFIX)_$(LIBTYPE_SUFFIX)')">$(novPlatformToolsetVersion)</wxMSVC_VERSION>
   </PropertyGroup>
   <ItemGroup>
     <!--wxWidget application's dynamically-linked dependencies ideally should be available within the output directory, so that the exe can be directly ran from that folder; name them here-->
@@ -67,6 +69,9 @@
     <Exec WorkingDirectory="$(wxWidgets)\build\msw" Command="$(BuildStr)"/>
   </Target>
   <!--The next few targets print messages, illuminating the changes this package had made on the build process (useful to diagnose what is going wrong).-->
+  <Target BeforeTargets="ClCompile" Name="PrintwxWidgetsPathUndefinedMessage" Label="PrintwxWidgetsPathUndefinedMessage" Condition="'$(wxWidgets)'==''">
+    <Message Text="This project uses the wxWidgetsTemplate NuGet Package; either the WXWIN environmental variable must be defined, or the path to the wxWidgets library be defined in the project properties (in the 'Referenced Packages'->wxWidgets page)."/>
+  </Target>
   <Target BeforeTargets="ClCompile" Name="PrintClCompileVars" Label="PrintClCompileVars" Condition="'$(PrintMSBuildVars)'=='true'">
     <Message Condition="@(ClCompile-&gt;'%(AdditionalIncludeDirectories)')!=''" Text="ClCompile.ClCompileAdditionalIncludeDirectories: %(AdditionalIncludeDirectories)"/>
     <Message Condition="@(ClCompile-&gt;'%(PreprocessorDefinitions)')!=''" Text="ClCompile.PreprocessorDefinitions: %(PreprocessorDefinitions)"/>

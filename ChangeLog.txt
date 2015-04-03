@@ -1,3 +1,6 @@
+2.5.3
+Fixed and improved auto-detection of wxWidgets library include path.
+Now prints a message when wxWidgets library path is unresolvable (WXWIN not defined, nor is path defined in properties).
 2.5.2
 Had to rename .props and .targets files to match id.
 2.5.1
