@@ -2,6 +2,8 @@
 The license for this package and its contents are that of the wxWidgets project: http://www.wxwidgets.org/about/licence/
 Copyright (c) 2013-2015 Andrew Smart
 
+TECHNICALLY OBSOLETE by new Microsoft tooling and NOT MAINTAINED. See: https://www.wxwidgets.org/blog/2019/01/wxwidgets-and-vcpkg/
+
 This NuGet package assists MSVC projects that depend on wxWidgets.
 
 Guide to installing and configuring this package is here:
